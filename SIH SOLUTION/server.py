@@ -81,5 +81,19 @@ async def websocket_endpoint(websocket: WebSocket):
 
 if __name__ == "__main__":
     import random
+    import socket
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+
+    def is_port_in_use(port: int) -> bool:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            return s.connect_ex(('127.0.0.1', port)) == 0
+
+    target_port = 8000
+    while is_port_in_use(target_port) and target_port < 8050:
+        print(f"Port {target_port} is in use. Falling back to port {target_port + 1}...")
+        target_port += 1
+
+    print(f"\n=======================================================")
+    print(f"🚀 SIH COMMAND CENTER RUNNING AT: http://127.0.0.1:{target_port}")
+    print(f"=======================================================\n")
+    uvicorn.run(app, host="127.0.0.1", port=target_port)
