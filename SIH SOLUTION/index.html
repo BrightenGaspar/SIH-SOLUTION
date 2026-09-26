@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIH Hologram Command Center v3.5 - Real-Time Capacity & Warnings</title>
+    <title>Smart India Hackathon (SIH 2026) - Official Problem Statements Portal & Live Telemetry</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Orbitron:wght@600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -18,21 +18,21 @@
                 extend: {
                     colors: {
                         cyber: {
-                            bg: '#02050e',
-                            panel: '#071026',
-                            card: '#0a1630',
-                            cardHover: '#0f2044',
+                            bg: '#020617',
+                            panel: '#0b1329',
+                            card: '#0e1a38',
+                            cardHover: '#13234d',
                             cyan: '#00f0ff',
                             magenta: '#ff007f',
                             yellow: '#ffe600',
                             green: '#00ff66',
                             purple: '#a855f7',
-                            orange: '#ff6600'
+                            orange: '#ff7700'
                         }
                     },
                     fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                         orbitron: ['Orbitron', 'sans-serif'],
-                        rajdhani: ['Rajdhani', 'sans-serif'],
                         mono: ['Share Tech Mono', 'monospace']
                     }
                 }
@@ -41,221 +41,246 @@
     </script>
     <style>
         body {
-            background-color: #02050e;
+            background-color: #020617;
             color: #f1f5f9;
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 60%),
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px, 30px 30px;
+                radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
         }
         .holo-border {
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.12), inset 0 0 15px rgba(0, 240, 255, 0.03);
         }
         .holo-border-magenta {
             border: 1px solid rgba(255, 0, 127, 0.5);
-            box-shadow: 0 0 18px rgba(255, 0, 127, 0.25);
-        }
-        .scanline {
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0, 240, 255, 0.04) 50%, rgba(0, 240, 255, 0.04));
-            background-size: 100% 4px;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);
         }
         ::-webkit-scrollbar {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #040918;
+            background: #060d21;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(0, 240, 255, 0.5);
+            background: rgba(0, 240, 255, 0.4);
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 240, 255, 0.9);
+            background: rgba(0, 240, 255, 0.8);
         }
 
         /* High Visibility Status Card Themes */
         .card-completed {
-            background: linear-gradient(135deg, rgba(76, 5, 15, 0.85) 0%, rgba(20, 2, 5, 0.95) 100%);
+            background: linear-gradient(145deg, rgba(69, 10, 10, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
             border: 2px solid #ef4444;
-            box-shadow: 0 0 18px rgba(239, 68, 68, 0.35);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.25);
         }
         .card-completed:hover {
             border-color: #f87171;
-            box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+            box-shadow: 0 12px 30px rgba(239, 68, 68, 0.45);
         }
 
         .card-warning {
-            background: linear-gradient(135deg, rgba(85, 45, 0, 0.85) 0%, rgba(26, 12, 0, 0.95) 100%);
+            background: linear-gradient(145deg, rgba(69, 39, 4, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
             border: 2px solid #f59e0b;
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
         }
         .card-warning:hover {
             border-color: #fbbf24;
-            box-shadow: 0 0 28px rgba(245, 158, 11, 0.6);
+            box-shadow: 0 12px 32px rgba(245, 158, 11, 0.55);
         }
 
         .card-open {
-            background: linear-gradient(135deg, rgba(4, 47, 36, 0.8) 0%, rgba(3, 18, 17, 0.95) 100%);
+            background: linear-gradient(145deg, rgba(6, 78, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
             border: 1.5px solid #10b981;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);
         }
         .card-open:hover {
             border-color: #34d399;
-            box-shadow: 0 0 22px rgba(16, 185, 129, 0.45);
+            box-shadow: 0 12px 28px rgba(16, 185, 129, 0.4);
+        }
+
+        .chip-active {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: #00f0ff;
+            color: #00f0ff;
+            font-weight: 700;
         }
     </style>
 </head>
-<body class="font-rajdhani min-h-screen p-3 md:p-6 scanline">
+<body class="font-sans min-h-screen p-3 md:p-6 antialiased">
 
-    <!-- TOP HEADER NAV -->
-    <header class="holo-border bg-cyber-panel/90 backdrop-blur-md rounded-xl p-4 mb-6 flex flex-wrap justify-between items-center gap-4">
-        <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-lg bg-cyber-cyan/15 border-2 border-cyber-cyan flex items-center justify-center shadow-lg shadow-cyber-cyan/20">
-                <i class="fa-solid fa-cube text-cyber-cyan text-2xl animate-pulse"></i>
+    <!-- OFFICIAL PORTAL BANNER & TOP NAV -->
+    <header class="holo-border bg-cyber-panel/95 backdrop-blur-md rounded-2xl p-4 md:p-5 mb-6 shadow-2xl">
+        <div class="flex flex-wrap justify-between items-center gap-4">
+            <!-- Logo & Official SIH Branding -->
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyber-cyan/30 to-cyber-magenta/30 border-2 border-cyber-cyan flex items-center justify-center shadow-lg shadow-cyber-cyan/20">
+                    <i class="fa-solid fa-graduation-cap text-cyber-cyan text-2xl"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-mono font-bold tracking-widest px-2 py-0.5 rounded bg-cyber-cyan/20 text-cyber-cyan border border-cyber-cyan/40">SIH 2026 OFFICIAL REGISTRY</span>
+                        <a href="https://sih.gov.in/sih2026PS" target="_blank" class="text-[10px] font-mono text-slate-400 hover:text-white flex items-center gap-1 transition underline">
+                            sih.gov.in/sih2026PS <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                        </a>
+                    </div>
+                    <h1 class="font-orbitron font-black text-xl md:text-2xl text-white tracking-wide mt-0.5">
+                        SMART INDIA HACKATHON <span class="text-cyber-cyan">EXPLORER</span>
+                    </h1>
+                </div>
             </div>
-            <div>
-                <h1 class="font-orbitron font-extrabold text-xl md:text-2xl text-cyber-cyan tracking-wider flex items-center gap-2">
-                    SIH TELEMETRY COMMAND CENTER <span class="text-xs text-cyber-magenta font-mono border border-cyber-magenta/60 bg-cyber-magenta/10 px-2 py-0.5 rounded">v3.5 LIVE</span>
-                </h1>
-                <p class="text-xs font-mono text-slate-300">HIGH-VISIBILITY REAL-TIME MONITORING • 340+ OFFICIAL PROBLEM STATEMENTS</p>
+            
+            <!-- Live Status & Sync Clock -->
+            <div class="hidden md:flex items-center gap-4 font-mono text-xs">
+                <div class="flex items-center gap-2 bg-slate-900/90 px-3.5 py-2 rounded-xl border border-cyber-green/50 shadow-inner">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyber-green animate-ping"></span>
+                    <span class="text-cyber-green font-bold" id="backend-status">REAL-TIME TELEMETRY ACTIVE</span>
+                </div>
+                <div id="header-clock" class="text-slate-300 font-mono bg-slate-900/90 px-3.5 py-2 rounded-xl border border-slate-700">--:--:-- UTC</div>
             </div>
-        </div>
-        
-        <div class="flex items-center gap-4 font-mono text-xs">
-            <div class="flex items-center gap-2 bg-slate-900/90 px-3.5 py-2 rounded-lg border border-cyber-green/50">
-                <span class="w-2.5 h-2.5 rounded-full bg-cyber-green animate-ping"></span>
-                <span class="text-cyber-green font-bold" id="backend-status">0.5s WEBSOCKET ACTIVE</span>
-            </div>
-            <div id="header-clock" class="text-slate-300 font-mono bg-slate-900/90 px-3.5 py-2 rounded-lg border border-slate-700">--:--:-- UTC</div>
-        </div>
 
-        <div class="flex items-center gap-2">
-            <a href="#shortlist" onclick="app.toggleBookmarksOnly(true)" id="btn-bookmarks" class="px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow text-cyber-yellow font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md">
-                <i class="fa-solid fa-star text-xs"></i> SHORTLIST (<span id="bookmark-count">0</span>)
-            </a>
-            <a href="/api/export-csv" download="sih_problem_statements_official.csv" id="btn-export-csv" class="px-3.5 py-2 bg-cyber-green/15 border border-cyber-green text-cyber-green font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-green/30 transition flex items-center gap-1.5 shadow-md">
-                <i class="fa-solid fa-download text-xs"></i> EXPORT CSV
-            </a>
-            <a href="#login" onclick="app.openAuthModal()" id="btn-otp-login" class="px-3.5 py-2 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-cyan/35 transition flex items-center gap-1.5 shadow-md">
-                <i class="fa-solid fa-user-shield text-xs"></i> OTP LOGIN
-            </a>
+            <!-- Quick Action Links -->
+            <div class="flex items-center gap-2">
+                <a href="#shortlist" onclick="app.toggleBookmarksOnly(true)" id="btn-bookmarks" class="px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow/60 text-cyber-yellow font-bold text-xs rounded-xl hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md">
+                    <i class="fa-solid fa-star text-xs"></i> SHORTLIST (<span id="bookmark-count">0</span>)
+                </a>
+                <a href="/api/export-csv" download="sih_problem_statements_official.csv" id="btn-export-csv" class="px-3.5 py-2 bg-cyber-green/15 border border-cyber-green/60 text-cyber-green font-bold text-xs rounded-xl hover:bg-cyber-green/30 transition flex items-center gap-1.5 shadow-md">
+                    <i class="fa-solid fa-file-csv text-sm"></i> EXPORT CSV
+                </a>
+                <a href="#login" onclick="app.openAuthModal()" id="btn-otp-login" class="px-3.5 py-2 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-bold text-xs rounded-xl hover:bg-cyber-cyan/35 transition flex items-center gap-1.5 shadow-md">
+                    <i class="fa-solid fa-user-shield text-xs"></i> OTP LOGIN
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- HIGH-VISIBILITY COLOR STATUS LEGEND & QUICK FILTER TILES -->
+    <!-- METRICS & STATUS LEGEND (TOP 4 STATUS TILES) -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- ALL PS TILE -->
-        <div onclick="app.quickFilterStatus('ALL')" class="cursor-pointer bg-slate-900/90 border-2 border-cyber-cyan/60 hover:border-cyber-cyan p-4 rounded-xl relative overflow-hidden transition transform hover:-translate-y-0.5 shadow-lg">
-            <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-mono font-bold text-cyber-cyan uppercase tracking-wide">01 TOTAL REGISTRY</span>
-                <i class="fa-solid fa-layer-group text-cyber-cyan"></i>
+        <div onclick="app.quickFilterStatus('ALL')" class="cursor-pointer bg-slate-900/90 border-2 border-slate-700 hover:border-cyber-cyan p-4.5 rounded-2xl relative overflow-hidden transition transform hover:-translate-y-1 shadow-xl group">
+            <div class="flex justify-between items-center mb-1.5">
+                <span class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">ALL STATEMENTS</span>
+                <span class="w-8 h-8 rounded-lg bg-cyber-cyan/15 flex items-center justify-center text-cyber-cyan"><i class="fa-solid fa-layer-group"></i></span>
             </div>
             <div class="text-3xl font-orbitron font-black text-white" id="stat-total-ps">345</div>
-            <div class="text-xs text-slate-300 font-mono mt-1">All Problem Statements Loaded</div>
+            <div class="text-xs text-slate-400 mt-1">Full Official SIH Directory</div>
             <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-cyber-cyan"></div>
         </div>
 
         <!-- 🟢 OPEN / ACCEPTING TILE -->
-        <div onclick="app.quickFilterStatus('OPEN')" class="cursor-pointer bg-emerald-950/70 border-2 border-emerald-500 hover:border-emerald-400 p-4 rounded-xl relative overflow-hidden transition transform hover:-translate-y-0.5 shadow-lg shadow-emerald-950/50">
-            <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-mono font-bold text-emerald-400 flex items-center gap-1.5">
+        <div onclick="app.quickFilterStatus('OPEN')" class="cursor-pointer bg-emerald-950/70 border-2 border-emerald-500/70 hover:border-emerald-400 p-4.5 rounded-2xl relative overflow-hidden transition transform hover:-translate-y-1 shadow-xl shadow-emerald-950/40">
+            <div class="flex justify-between items-center mb-1.5">
+                <span class="text-xs font-mono font-bold text-emerald-300 flex items-center gap-1.5 uppercase tracking-wider">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     🟢 OPEN / ACCEPTING
                 </span>
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                <span class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-check"></i></span>
             </div>
             <div class="text-3xl font-orbitron font-black text-emerald-300" id="stat-open-ps">176</div>
-            <div class="text-xs text-emerald-200/80 font-mono mt-1">&lt; 400 Submissions (Safe Slots Available)</div>
+            <div class="text-xs text-emerald-200/80 mt-1 font-semibold">&lt; 400 Submissions (Slots Available)</div>
             <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-emerald-400"></div>
         </div>
 
         <!-- ⚠️ WARNING: CLOSING SOON TILE -->
-        <div onclick="app.quickFilterStatus('CRITICAL')" class="cursor-pointer bg-amber-950/70 border-2 border-amber-400 hover:border-amber-300 p-4 rounded-xl relative overflow-hidden transition transform hover:-translate-y-0.5 shadow-lg shadow-amber-950/60">
-            <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-mono font-bold text-amber-300 flex items-center gap-1.5">
+        <div onclick="app.quickFilterStatus('CRITICAL')" class="cursor-pointer bg-amber-950/70 border-2 border-amber-400 hover:border-amber-300 p-4.5 rounded-2xl relative overflow-hidden transition transform hover:-translate-y-1 shadow-xl shadow-amber-950/50">
+            <div class="flex justify-between items-center mb-1.5">
+                <span class="text-xs font-mono font-bold text-amber-300 flex items-center gap-1.5 uppercase tracking-wider">
                     <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
                     ⚠️ WARNING: CLOSING SOON
                 </span>
-                <i class="fa-solid fa-triangle-exclamation text-amber-400 animate-bounce"></i>
+                <span class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 animate-bounce"><i class="fa-solid fa-triangle-exclamation"></i></span>
             </div>
             <div class="text-3xl font-orbitron font-black text-amber-300" id="stat-critical-ps">94</div>
-            <div class="text-xs text-amber-200/90 font-mono mt-1 font-semibold">400 - 499 Submissions (Finishing Soon!)</div>
+            <div class="text-xs text-amber-200 font-semibold mt-1">400 - 499 Submissions (Closing Fast!)</div>
             <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-amber-400"></div>
         </div>
 
         <!-- 🔴 COMPLETED / FROZEN TILE -->
-        <div onclick="app.quickFilterStatus('FROZEN')" class="cursor-pointer bg-red-950/70 border-2 border-red-500 hover:border-red-400 p-4 rounded-xl relative overflow-hidden transition transform hover:-translate-y-0.5 shadow-lg shadow-red-950/60">
-            <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-mono font-bold text-red-400 flex items-center gap-1.5">
+        <div onclick="app.quickFilterStatus('FROZEN')" class="cursor-pointer bg-red-950/70 border-2 border-red-500 hover:border-red-400 p-4.5 rounded-2xl relative overflow-hidden transition transform hover:-translate-y-1 shadow-xl shadow-red-950/50">
+            <div class="flex justify-between items-center mb-1.5">
+                <span class="text-xs font-mono font-bold text-red-300 flex items-center gap-1.5 uppercase tracking-wider">
                     <i class="fa-solid fa-lock text-xs"></i>
                     🔴 COMPLETED / FROZEN
                 </span>
-                <i class="fa-solid fa-ban text-red-400"></i>
+                <span class="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400"><i class="fa-solid fa-ban"></i></span>
             </div>
             <div class="text-3xl font-orbitron font-black text-red-300" id="stat-frozen-ps">75</div>
-            <div class="text-xs text-red-200/80 font-mono mt-1">500/500 Max Cap (Submissions Closed)</div>
+            <div class="text-xs text-red-200/80 mt-1">500 / 500 Maximum Cap Reached</div>
             <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-red-500"></div>
         </div>
     </section>
 
-    <!-- COMPREHENSIVE FILTER & SEARCH BAR -->
-    <section class="holo-border bg-cyber-panel/85 rounded-xl p-5 mb-6 space-y-4">
-        <!-- Main Search & Category Selection -->
+    <!-- SEARCH, VIEW SWITCHER & ADVANCED FILTERS CONSOLE -->
+    <section class="holo-border bg-cyber-panel/90 rounded-2xl p-5 mb-6 space-y-4 shadow-xl">
+        <!-- Main Search Bar & View Toggle -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            <!-- Search Input -->
-            <div class="lg:col-span-6 relative">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-cyber-cyan text-sm"></i>
-                <input type="text" id="search-input" onkeyup="app.handleSearch()" placeholder="Search PS ID, Title, Ministry, Domain, or Tech (e.g. PS1024, AI, Drone, MoRTH)..." class="w-full bg-slate-900 border-2 border-cyber-cyan/50 rounded-lg pl-10 pr-10 py-2.5 text-sm font-mono text-white placeholder-slate-400 focus:outline-none focus:border-cyber-cyan focus:ring-2 focus:ring-cyber-cyan/30 transition">
-                <button onclick="app.clearSearch()" id="clear-search-btn" class="absolute right-3 top-3 text-slate-400 hover:text-white hidden"><i class="fa-solid fa-xmark"></i></button>
+            <!-- Search Bar -->
+            <div class="lg:col-span-7 relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-cyber-cyan text-base"></i>
+                <input type="text" id="search-input" onkeyup="app.handleSearch()" placeholder="Search PS ID, Title, Ministry, Domain (e.g. SIH1501, AI, Drone, MoRTH)..." class="w-full bg-slate-900 border-2 border-slate-700 focus:border-cyber-cyan rounded-xl pl-11 pr-10 py-3 text-sm font-medium text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyber-cyan/30 transition">
+                <button onclick="app.clearSearch()" id="clear-search-btn" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-white hidden"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Category Filter Tabs -->
-            <div class="lg:col-span-6 flex flex-wrap items-center gap-2 font-mono text-xs justify-start lg:justify-end">
-                <span class="text-slate-300 mr-1 text-xs font-bold">CATEGORY:</span>
-                <button onclick="app.setCategoryFilter('ALL')" id="cat-all" class="px-3.5 py-2 rounded-lg bg-cyber-cyan text-cyber-bg font-extrabold border border-cyber-cyan transition">ALL (<span id="count-cat-all">0</span>)</button>
-                <button onclick="app.setCategoryFilter('Software')" id="cat-software" class="px-3.5 py-2 rounded-lg bg-slate-900 text-blue-300 border border-blue-500/60 hover:border-blue-400 font-bold transition">💻 SOFTWARE (<span id="count-cat-soft">0</span>)</button>
-                <button onclick="app.setCategoryFilter('Hardware')" id="cat-hardware" class="px-3.5 py-2 rounded-lg bg-slate-900 text-purple-300 border border-purple-500/60 hover:border-purple-400 font-bold transition">⚙️ HARDWARE (<span id="count-cat-hard">0</span>)</button>
+            <!-- Category & View Switcher -->
+            <div class="lg:col-span-5 flex flex-wrap items-center justify-start lg:justify-end gap-2.5">
+                <!-- Category Tabs -->
+                <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-700 text-xs font-bold">
+                    <button onclick="app.setCategoryFilter('ALL')" id="cat-all" class="px-3 py-1.5 rounded-lg bg-cyber-cyan text-slate-950 transition">ALL (<span id="count-cat-all">0</span>)</button>
+                    <button onclick="app.setCategoryFilter('Software')" id="cat-software" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">💻 SOFTWARE</button>
+                    <button onclick="app.setCategoryFilter('Hardware')" id="cat-hardware" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">⚙️ HARDWARE</button>
+                </div>
+
+                <!-- View Mode Toggle (Grid vs Table) -->
+                <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-700 text-xs font-bold">
+                    <button onclick="app.setViewMode('grid')" id="view-mode-grid" title="Card Grid View" class="px-3 py-1.5 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan transition flex items-center gap-1">
+                        <i class="fa-solid fa-grip"></i> CARDS
+                    </button>
+                    <button onclick="app.setViewMode('table')" id="view-mode-table" title="Official Table View" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1">
+                        <i class="fa-solid fa-table-list"></i> TABLE
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Advanced Filter Controls (Capacity, Domain, Ministry, Sort) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-slate-800 text-xs font-mono">
+        <!-- Filter Dropdowns Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-slate-800 text-xs">
             <!-- Capacity Filter -->
             <div>
-                <label class="block text-slate-300 font-bold mb-1">CAPACITY STATUS</label>
-                <select id="filter-capacity" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-semibold focus:outline-none focus:border-cyber-cyan">
+                <label class="block text-slate-300 font-bold mb-1.5">CAPACITY STATUS</label>
+                <select id="filter-capacity" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-medium focus:outline-none focus:border-cyber-cyan">
                     <option value="ALL">All Capacity Levels</option>
                     <option value="OPEN">🟢 Open (&lt; 400 Submissions - Active)</option>
                     <option value="CRITICAL">⚠️ WARNING: Finishing Soon (400 - 499)</option>
-                    <option value="FROZEN">🔴 Completed / Frozen (500 / 500 Cap)</option>
+                    <option value="FROZEN">🔴 Completed / Frozen (500 / 500 Limit)</option>
                 </select>
             </div>
 
             <!-- Domain / Theme Filter -->
             <div>
-                <label class="block text-slate-300 font-bold mb-1">THEME / DOMAIN</label>
-                <select id="filter-domain" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-semibold focus:outline-none focus:border-cyber-cyan">
-                    <option value="ALL">All Domains & Themes</option>
+                <label class="block text-slate-300 font-bold mb-1.5">OFFICIAL THEME / DOMAIN</label>
+                <select id="filter-domain" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-medium focus:outline-none focus:border-cyber-cyan">
+                    <option value="ALL">All SIH Themes</option>
                 </select>
             </div>
 
-            <!-- Ministry / Organization Filter -->
+            <!-- Ministry Filter -->
             <div>
-                <label class="block text-slate-300 font-bold mb-1">MINISTRY / ORG</label>
-                <select id="filter-ministry" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-semibold focus:outline-none focus:border-cyber-cyan">
-                    <option value="ALL">All Ministries & Organizations</option>
+                <label class="block text-slate-300 font-bold mb-1.5">MINISTRY / ORGANIZATION</label>
+                <select id="filter-ministry" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-medium focus:outline-none focus:border-cyber-cyan">
+                    <option value="ALL">All Government Ministries</option>
                 </select>
             </div>
 
             <!-- Sort By -->
             <div>
-                <label class="block text-slate-300 font-bold mb-1">SORT ORDER</label>
-                <select id="filter-sort" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-semibold focus:outline-none focus:border-cyber-cyan">
-                    <option value="id_asc">PS ID (Ascending: 1001 → 1345)</option>
-                    <option value="id_desc">PS ID (Descending: 1345 → 1001)</option>
+                <label class="block text-slate-300 font-bold mb-1.5">SORT BY</label>
+                <select id="filter-sort" onchange="app.handleFilterChange()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-medium focus:outline-none focus:border-cyber-cyan">
+                    <option value="id_asc">PS ID (Ascending: 1501 → 1845)</option>
+                    <option value="id_desc">PS ID (Descending: 1845 → 1501)</option>
                     <option value="subs_desc">Submissions (Highest First)</option>
                     <option value="subs_asc">Submissions (Lowest First)</option>
                     <option value="title_asc">Title (A → Z)</option>
@@ -263,32 +288,35 @@
             </div>
         </div>
 
-        <!-- Filter Status & Quick Reset -->
+        <!-- Filter Status & Results Count -->
         <div class="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs font-mono text-slate-300">
             <div class="flex items-center gap-2">
-                <span>Displaying <strong id="visible-count" class="text-cyber-cyan font-bold text-sm">0</strong> of <strong id="total-count" class="text-white font-bold text-sm">0</strong> Problem Statements</span>
-                <span id="active-filter-badge" class="hidden px-2.5 py-0.5 rounded bg-cyber-magenta/30 text-cyber-magenta border border-cyber-magenta/60 font-bold">Active Filters</span>
+                <span>Showing <strong id="visible-count" class="text-cyber-cyan font-bold text-sm">0</strong> of <strong id="total-count" class="text-white font-bold text-sm">0</strong> Statements</span>
+                <span id="active-filter-badge" class="hidden px-2.5 py-0.5 rounded bg-cyber-magenta/25 text-cyber-magenta border border-cyber-magenta/50 font-bold">Filters Active</span>
             </div>
-            <div class="flex items-center gap-2">
-                <button onclick="app.resetAllFilters()" class="text-slate-300 hover:text-cyber-cyan transition flex items-center gap-1 underline font-semibold">
+            <div class="flex items-center gap-3">
+                <button onclick="app.resetAllFilters()" class="text-slate-400 hover:text-cyber-cyan transition flex items-center gap-1 underline font-semibold">
                     <i class="fa-solid fa-arrows-rotate text-xs"></i> Reset All Filters
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- MAIN TWO-COLUMN LAYOUT (GRID + HUD INSPECTION PANEL) -->
+    <!-- MAIN TWO-COLUMN DISPLAY: (FEED + HUD TELEMETRY) -->
     <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
-        <!-- Problem Statements Feed (8 Cols) -->
-        <div class="lg:col-span-8 holo-border bg-cyber-panel/75 p-5 rounded-xl flex flex-col justify-between">
+        <!-- Main Directory Area (8 Cols) -->
+        <div class="lg:col-span-8 holo-border bg-cyber-panel/85 p-5 md:p-6 rounded-2xl flex flex-col justify-between shadow-2xl">
             <div>
-                <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
-                    <h2 class="font-orbitron text-lg text-cyber-cyan flex items-center gap-2 font-bold">
-                        <i class="fa-solid fa-satellite-dish animate-pulse"></i> PROBLEM STATEMENTS FEED
-                    </h2>
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-800">
+                    <div>
+                        <h2 class="font-orbitron text-lg font-bold text-cyber-cyan flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-cyber-cyan"></i> OFFICIAL PROBLEM STATEMENTS
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Click any statement to inspect full scope and requirements</p>
+                    </div>
                     <div class="flex items-center gap-2 text-xs font-mono">
-                        <span class="text-slate-300 font-semibold">Cards per Page:</span>
-                        <select id="pagination-size" onchange="app.changePageSize()" class="bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-cyber-cyan font-bold text-xs">
+                        <span class="text-slate-400 font-semibold">Page Size:</span>
+                        <select id="pagination-size" onchange="app.changePageSize()" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-cyber-cyan font-bold text-xs">
                             <option value="12">12</option>
                             <option value="24" selected>24</option>
                             <option value="48">48</option>
@@ -298,17 +326,37 @@
                     </div>
                 </div>
 
-                <!-- Cards Grid with High Visibility Visual Cues -->
-                <div id="ps-container" class="grid grid-cols-1 md:grid-cols-2 gap-4.5 min-h-[500px]">
+                <!-- CARD GRID VIEW -->
+                <div id="ps-container-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4.5 min-h-[500px]">
                     <!-- Dynamic Problem Statement Cards -->
+                </div>
+
+                <!-- OFFICIAL TABLE VIEW (NEAT LIST FORMAT) -->
+                <div id="ps-container-table" class="hidden overflow-x-auto min-h-[500px]">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-700 bg-slate-900/90 text-slate-300 font-mono font-bold">
+                                <th class="p-3">PS ID</th>
+                                <th class="p-3">ORGANIZATION / MINISTRY</th>
+                                <th class="p-3">PROBLEM STATEMENT TITLE</th>
+                                <th class="p-3">CATEGORY</th>
+                                <th class="p-3">THEME</th>
+                                <th class="p-3 text-center">SUBMISSIONS</th>
+                                <th class="p-3 text-center">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ps-table-body" class="divide-y divide-slate-800/80 font-medium">
+                            <!-- Dynamic Table Rows -->
+                        </tbody>
+                    </table>
                 </div>
 
                 <!-- Empty State Message -->
                 <div id="empty-state" class="hidden text-center py-16">
                     <i class="fa-solid fa-filter-circle-xmark text-4xl text-slate-500 mb-3"></i>
                     <h4 class="font-orbitron text-lg text-slate-200 font-bold">No Problem Statements Matched</h4>
-                    <p class="text-xs font-mono text-slate-400 mt-1">Try clearing your search query or adjusting filter dropdowns.</p>
-                    <button onclick="app.resetAllFilters()" class="mt-4 px-4 py-2 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-mono text-xs font-bold rounded-lg hover:bg-cyber-cyan/30 transition">
+                    <p class="text-xs text-slate-400 mt-1">Try clearing your search query or selecting "All Themes".</p>
+                    <button onclick="app.resetAllFilters()" class="mt-4 px-4 py-2 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-bold text-xs rounded-xl hover:bg-cyber-cyan/30 transition">
                         RESET ALL FILTERS
                     </button>
                 </div>
@@ -320,25 +368,24 @@
                     Page <span id="current-page-num" class="text-cyber-cyan font-bold text-sm">1</span> of <span id="total-pages-num" class="text-white font-bold text-sm">1</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="app.prevPage()" id="btn-prev-page" class="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyber-cyan font-bold disabled:opacity-30 disabled:hover:border-slate-700 transition">
+                    <button onclick="app.prevPage()" id="btn-prev-page" class="px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyber-cyan font-bold disabled:opacity-30 disabled:hover:border-slate-700 transition">
                         <i class="fa-solid fa-chevron-left mr-1"></i> PREV
                     </button>
                     <div id="page-pills" class="flex items-center gap-1"></div>
-                    <button onclick="app.nextPage()" id="btn-next-page" class="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyber-cyan font-bold disabled:opacity-30 disabled:hover:border-slate-700 transition">
+                    <button onclick="app.nextPage()" id="btn-next-page" class="px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyber-cyan font-bold disabled:opacity-30 disabled:hover:border-slate-700 transition">
                         NEXT <i class="fa-solid fa-chevron-right ml-1"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- HUD Telemetry & Detail Panel (4 Cols) -->
+        <!-- HUD Telemetry & Details Panel (4 Cols) -->
         <div class="lg:col-span-4 flex flex-col gap-6">
-            <!-- Selected Statement Inspector -->
-            <div class="holo-border-magenta bg-cyber-panel/90 p-5 rounded-xl flex flex-col justify-between h-full sticky top-4 shadow-2xl">
+            <div class="holo-border-magenta bg-cyber-panel/95 p-5 md:p-6 rounded-2xl flex flex-col justify-between h-full sticky top-4 shadow-2xl">
                 <div>
-                    <div class="flex justify-between items-center mb-3 pb-2 border-b border-cyber-magenta/40">
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-cyber-magenta/40">
                         <div class="text-xs font-mono text-cyber-magenta font-bold flex items-center gap-1.5">
-                            <i class="fa-solid fa-crosshairs"></i> 06 PS_TELEMETRY_HUD
+                            <i class="fa-solid fa-crosshairs"></i> PS_INSPECTION_HUD
                         </div>
                         <span id="hud-badge-status" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-cyber-magenta/20 text-cyber-magenta border border-cyber-magenta/50">READY</span>
                     </div>
@@ -346,41 +393,42 @@
                     <div id="hud-empty" class="text-center py-12">
                         <i class="fa-solid fa-hand-pointer text-4xl text-cyber-magenta/40 mb-3 animate-bounce"></i>
                         <h3 class="font-orbitron text-md text-white font-bold mb-1">Select a Problem Statement</h3>
-                        <p class="text-xs font-mono text-slate-400">Click any card from the directory to inspect full challenge details, remaining quota countdown, and official specifications.</p>
+                        <p class="text-xs text-slate-400">Click any statement from the directory or table to inspect full official challenge details, ministry requirements, and live slot counters.</p>
                     </div>
 
                     <div id="hud-details" class="hidden space-y-4">
-                        <!-- High Visibility Status Banner in HUD -->
-                        <div id="hud-status-banner" class="p-3 rounded-lg border text-xs font-mono font-bold flex items-center justify-between">
+                        <!-- Status Banner in HUD -->
+                        <div id="hud-status-banner" class="p-3 rounded-xl border text-xs font-mono font-bold flex items-center justify-between">
                             <span id="hud-status-banner-text">STATUS BANNER</span>
                             <span id="hud-status-banner-badge" class="px-2 py-0.5 rounded text-[10px]">BADGE</span>
                         </div>
 
                         <div class="flex justify-between items-start">
                             <div>
-                                <span id="hud-ps-id" class="font-orbitron text-2xl font-black text-cyber-cyan">PS1001</span>
-                                <span id="hud-ps-cat" class="ml-2 text-xs font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/50 font-bold">Software</span>
+                                <span id="hud-ps-id" class="font-orbitron text-2xl font-black text-cyber-cyan">SIH1501</span>
+                                <span id="hud-ps-cat" class="ml-2 text-xs font-mono px-2.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/50 font-bold">Software</span>
                             </div>
                             <button id="hud-star-btn" onclick="app.toggleHudBookmark()" class="text-slate-500 hover:text-cyber-yellow text-xl transition">
                                 <i class="fa-regular fa-star"></i>
                             </button>
                         </div>
-                        <h3 id="hud-ps-title" class="font-orbitron text-lg text-white font-bold leading-snug">AI-Driven Multi-Crop Disease Diagnosis</h3>
                         
-                        <div class="space-y-2 text-xs font-mono bg-slate-900/90 p-3.5 rounded-lg border border-slate-700">
-                            <div class="flex justify-between">
-                                <span class="text-slate-400 font-semibold">Ministry:</span>
-                                <span id="hud-ps-ministry" class="text-cyber-cyan text-right max-w-[200px] truncate font-bold">Ministry of Agriculture</span>
+                        <h3 id="hud-ps-title" class="font-orbitron text-base text-white font-bold leading-snug">AI-Driven Multi-Crop Disease Diagnosis</h3>
+                        
+                        <div class="space-y-2.5 text-xs bg-slate-900/90 p-4 rounded-xl border border-slate-700/80">
+                            <div>
+                                <span class="text-slate-400 block font-semibold mb-0.5">Ministry / Organization:</span>
+                                <span id="hud-ps-ministry" class="text-cyber-cyan font-bold block">Ministry of Agriculture</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-400 font-semibold">Theme/Domain:</span>
-                                <span id="hud-ps-domain" class="text-slate-200 font-semibold">Agriculture & FoodTech</span>
+                            <div>
+                                <span class="text-slate-400 block font-semibold mb-0.5">Theme / Domain:</span>
+                                <span id="hud-ps-domain" class="text-slate-200 font-semibold block">Agriculture & FoodTech</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="flex justify-between border-t border-slate-800 pt-2 font-mono">
                                 <span class="text-slate-400 font-semibold">Complexity:</span>
                                 <span id="hud-ps-comp" class="text-cyber-green font-bold">Medium</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="flex justify-between font-mono">
                                 <span class="text-slate-400 font-semibold">Slots Remaining:</span>
                                 <span id="hud-ps-remaining" class="text-amber-300 font-bold">18 / 500 Remaining</span>
                             </div>
@@ -388,7 +436,7 @@
 
                         <!-- Capacity Bar -->
                         <div>
-                            <div class="flex justify-between text-xs font-mono mb-1">
+                            <div class="flex justify-between text-xs font-mono mb-1.5">
                                 <span class="text-slate-300 font-bold">Capacity Meter:</span>
                                 <span id="hud-ps-capacity-text" class="text-white font-extrabold">482 / 500 (96%)</span>
                             </div>
@@ -400,7 +448,7 @@
                         <!-- Description -->
                         <div>
                             <div class="text-[11px] font-mono text-slate-300 mb-1 uppercase font-bold">Problem Scope & Challenge:</div>
-                            <p id="hud-ps-desc" class="text-xs text-slate-200 font-rajdhani leading-relaxed bg-slate-900/90 p-3 rounded-lg border border-slate-800"></p>
+                            <p id="hud-ps-desc" class="text-xs text-slate-200 leading-relaxed bg-slate-900/90 p-3.5 rounded-xl border border-slate-800"></p>
                         </div>
 
                         <!-- Tech Stack Tags -->
@@ -411,13 +459,18 @@
                     </div>
                 </div>
 
-                <div id="hud-actions" class="hidden mt-6 space-y-2 pt-4 border-t border-slate-800">
-                    <button id="hud-track-btn" onclick="app.trackCurrentPS()" class="w-full py-2.5 bg-cyber-magenta text-white font-orbitron text-xs font-bold rounded-lg hover:bg-magenta-600 transition flex items-center justify-center gap-2 shadow-lg shadow-cyber-magenta/25">
+                <div id="hud-actions" class="hidden mt-6 space-y-2.5 pt-4 border-t border-slate-800">
+                    <button id="hud-track-btn" onclick="app.trackCurrentPS()" class="w-full py-2.5 bg-cyber-magenta text-white font-orbitron text-xs font-bold rounded-xl hover:bg-magenta-600 transition flex items-center justify-center gap-2 shadow-lg shadow-cyber-magenta/25">
                         <i class="fa-solid fa-bell"></i> ENABLE SURGE ALERT NOTIFICATION
                     </button>
-                    <button onclick="app.copyPSDetails()" class="w-full py-2 bg-slate-900 border border-cyber-cyan/50 text-cyber-cyan font-mono text-xs font-bold rounded-lg hover:border-cyber-cyan transition flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-copy"></i> COPY PS SPECIFICATIONS
-                    </button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="app.copyPSDetails()" class="py-2 bg-slate-900 border border-cyber-cyan/50 text-cyber-cyan font-mono text-xs font-bold rounded-xl hover:border-cyber-cyan transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> COPY DETAILS
+                        </button>
+                        <a href="https://sih.gov.in/sih2026PS" target="_blank" class="py-2 bg-slate-900 border border-slate-600 text-slate-300 font-mono text-xs font-bold rounded-xl hover:text-white hover:border-slate-400 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> SIH PORTAL
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -425,35 +478,35 @@
 
     <!-- AUTH MODAL -->
     <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="holo-border bg-cyber-panel max-w-md w-full p-6 rounded-xl relative shadow-2xl">
+        <div class="holo-border bg-cyber-panel max-w-md w-full p-6 rounded-2xl relative shadow-2xl">
             <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
-            <div class="w-12 h-12 rounded-lg bg-cyber-cyan/15 border-2 border-cyber-cyan flex items-center justify-center mb-3">
+            <div class="w-12 h-12 rounded-xl bg-cyber-cyan/15 border-2 border-cyber-cyan flex items-center justify-center mb-3.5">
                 <i class="fa-solid fa-shield-halved text-cyber-cyan text-2xl"></i>
             </div>
             <h3 class="font-orbitron text-lg text-cyber-cyan font-bold mb-1">HOLOGRAPHIC AUTHENTICATION</h3>
             
             <!-- Step 1: Input Identifier -->
             <div id="auth-step-1" class="space-y-4">
-                <p class="text-xs font-mono text-slate-400">Enter team lead registered mobile number or email to receive instant 6-digit OTP passcode.</p>
+                <p class="text-xs text-slate-400">Enter team lead registered mobile number or email to receive instant 6-digit OTP passcode.</p>
                 <div>
-                    <input type="text" id="auth-input" placeholder="Mobile (+91) or Lead Email..." class="w-full bg-slate-900 border-2 border-cyber-cyan/50 rounded-lg p-2.5 font-mono text-sm text-white focus:outline-none focus:border-cyber-cyan">
+                    <input type="text" id="auth-input" placeholder="Mobile (+91) or Lead Email..." class="w-full bg-slate-900 border-2 border-slate-700 focus:border-cyber-cyan rounded-xl p-3 font-mono text-sm text-white focus:outline-none">
                 </div>
-                <button onclick="app.sendOTP()" id="btn-send-otp" class="w-full py-2.5 bg-cyber-cyan text-cyber-bg font-orbitron font-extrabold text-xs rounded-lg hover:bg-cyan-300 transition shadow-lg shadow-cyber-cyan/20 flex items-center justify-center gap-2">
+                <button onclick="app.sendOTP()" id="btn-send-otp" class="w-full py-2.5 bg-cyber-cyan text-slate-950 font-orbitron font-extrabold text-xs rounded-xl hover:bg-cyan-300 transition shadow-lg shadow-cyber-cyan/20 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-paper-plane"></i> SEND TELEMETRY OTP
                 </button>
             </div>
 
             <!-- Step 2: Input OTP -->
             <div id="auth-step-2" class="hidden space-y-4">
-                <div class="p-3 bg-cyber-green/10 border border-cyber-green/40 rounded-lg text-xs font-mono text-cyber-green flex items-center justify-between">
+                <div class="p-3 bg-cyber-green/10 border border-cyber-green/40 rounded-xl text-xs font-mono text-cyber-green flex items-center justify-between">
                     <span><i class="fa-solid fa-circle-check mr-1"></i> OTP Sent to: <strong id="auth-target-display"></strong></span>
                     <button onclick="app.resetAuthStep()" class="underline text-slate-400 hover:text-white text-[10px]">Change</button>
                 </div>
                 <div>
                     <label class="block text-xs font-mono text-slate-300 mb-1">ENTER 6-DIGIT OTP</label>
-                    <input type="text" id="auth-otp-code" maxlength="6" placeholder="• • • • • •" class="w-full bg-slate-900 border-2 border-cyber-cyan/50 rounded-lg p-2.5 text-center tracking-[0.4em] font-mono text-lg text-cyber-cyan focus:outline-none focus:border-cyber-cyan font-bold">
+                    <input type="text" id="auth-otp-code" maxlength="6" placeholder="• • • • • •" class="w-full bg-slate-900 border-2 border-cyber-cyan/50 rounded-xl p-3 text-center tracking-[0.4em] font-mono text-lg text-cyber-cyan focus:outline-none focus:border-cyber-cyan font-bold">
                 </div>
-                <button onclick="app.verifyOTP()" id="btn-verify-otp" class="w-full py-2.5 bg-cyber-green text-slate-950 font-orbitron font-extrabold text-xs rounded-lg hover:bg-emerald-300 transition shadow-lg shadow-cyber-green/20 flex items-center justify-center gap-2">
+                <button onclick="app.verifyOTP()" id="btn-verify-otp" class="w-full py-2.5 bg-cyber-green text-slate-950 font-orbitron font-extrabold text-xs rounded-xl hover:bg-emerald-300 transition shadow-lg shadow-cyber-green/20 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-lock-open"></i> VERIFY & LOGIN
                 </button>
             </div>
@@ -464,8 +517,8 @@
                     <i class="fa-solid fa-check"></i>
                 </div>
                 <h4 class="font-orbitron text-md text-white font-bold">AUTHENTICATION SUCCESSFUL</h4>
-                <p class="text-xs font-mono text-slate-300">Team Lead Session Token Active. Telemetry rights unlocked.</p>
-                <button onclick="app.closeAuthModal()" class="px-6 py-2 bg-slate-800 border border-slate-600 rounded-lg text-xs font-mono text-white hover:bg-slate-700">
+                <p class="text-xs text-slate-300">Team Lead Session Token Active. Telemetry rights unlocked.</p>
+                <button onclick="app.closeAuthModal()" class="px-6 py-2 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white hover:bg-slate-700">
                     CONTINUE TO COMMAND CENTER
                 </button>
             </div>
@@ -473,7 +526,7 @@
     </div>
 
     <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 font-mono text-xs px-4 py-3 rounded-lg border flex items-center gap-2 shadow-xl"></div>
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 font-mono text-xs px-4 py-3 rounded-xl border flex items-center gap-2 shadow-xl"></div>
 
     <!-- APP ENGINE JS SCRIPT -->
     <script>
@@ -484,6 +537,7 @@
                 this.selectedPS = null;
                 this.bookmarks = JSON.parse(localStorage.getItem('sih_bookmarks') || '[]');
                 this.bookmarksOnly = false;
+                this.viewMode = 'grid'; // 'grid' or 'table'
                 
                 // Filters
                 this.searchQuery = '';
@@ -507,6 +561,44 @@
                 this.populateFilterDropdowns();
                 this.applyFilters();
                 this.initWebSocket();
+                this.handleUrlHash();
+                window.addEventListener('hashchange', () => this.handleUrlHash());
+            }
+
+            handleUrlHash() {
+                const hash = window.location.hash.toLowerCase();
+                const params = new URLSearchParams(window.location.search);
+                if (hash === '#shortlist' || params.get('view') === 'shortlist') {
+                    this.bookmarksOnly = true;
+                    const btn = document.getElementById('btn-bookmarks');
+                    if (btn) btn.className = "px-3.5 py-2 bg-cyber-yellow text-slate-950 font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-cyber-yellow/30";
+                    this.applyFilters();
+                } else if (hash === '#login' || params.get('modal') === 'otp') {
+                    this.openAuthModal();
+                } else if (hash === '#export' || params.get('export') === 'csv') {
+                    window.location.href = '/api/export-csv';
+                }
+            }
+
+            setViewMode(mode) {
+                this.viewMode = mode;
+                const gridBtn = document.getElementById('view-mode-grid');
+                const tableBtn = document.getElementById('view-mode-table');
+                const gridContainer = document.getElementById('ps-container-grid');
+                const tableContainer = document.getElementById('ps-container-table');
+
+                if (mode === 'grid') {
+                    gridBtn.className = "px-3 py-1.5 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan transition flex items-center gap-1";
+                    tableBtn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1";
+                    gridContainer.classList.remove('hidden');
+                    tableContainer.classList.add('hidden');
+                } else {
+                    tableBtn.className = "px-3 py-1.5 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan transition flex items-center gap-1";
+                    gridBtn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1";
+                    gridContainer.classList.add('hidden');
+                    tableContainer.classList.remove('hidden');
+                }
+                this.renderCurrentView();
             }
 
             async loadStatements() {
@@ -518,7 +610,6 @@
                         throw new Error('API not available');
                     }
                 } catch (e) {
-                    console.warn('Loading fallback embedded dataset', e);
                     try {
                         const localRes = await fetch('problem_statements.json');
                         if (localRes.ok) {
@@ -539,8 +630,6 @@
                 const hard = this.statements.filter(s => s.category === 'Hardware').length;
 
                 document.getElementById('count-cat-all').innerText = total;
-                document.getElementById('count-cat-soft').innerText = soft;
-                document.getElementById('count-cat-hard').innerText = hard;
 
                 const frozen = this.statements.filter(s => s.count >= 500).length;
                 const critical = this.statements.filter(s => s.count >= 400 && s.count < 500).length;
@@ -608,9 +697,9 @@
                 ['all', 'software', 'hardware'].forEach(c => {
                     const btn = document.getElementById(`cat-${c}`);
                     if (c.toLowerCase() === cat.toLowerCase()) {
-                        btn.className = "px-3.5 py-2 rounded-lg bg-cyber-cyan text-cyber-bg font-extrabold border border-cyber-cyan transition";
+                        btn.className = "px-3 py-1.5 rounded-lg bg-cyber-cyan text-slate-950 font-bold transition";
                     } else {
-                        btn.className = "px-3.5 py-2 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 hover:border-cyber-cyan/50 font-bold transition";
+                        btn.className = "px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition";
                     }
                 });
                 this.currentPage = 1;
@@ -626,13 +715,17 @@
                 this.applyFilters();
             }
 
-            toggleBookmarksOnly() {
-                this.bookmarksOnly = !this.bookmarksOnly;
+            toggleBookmarksOnly(forceState) {
+                if (forceState !== undefined) {
+                    this.bookmarksOnly = forceState;
+                } else {
+                    this.bookmarksOnly = !this.bookmarksOnly;
+                }
                 const btn = document.getElementById('btn-bookmarks');
                 if (this.bookmarksOnly) {
-                    btn.className = "px-3.5 py-2 bg-cyber-yellow text-cyber-bg font-extrabold font-orbitron text-xs rounded-lg transition flex items-center gap-1.5 shadow-lg shadow-cyber-yellow/30";
+                    btn.className = "px-3.5 py-2 bg-cyber-yellow text-slate-950 font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-cyber-yellow/30";
                 } else {
-                    btn.className = "px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow text-cyber-yellow font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md";
+                    btn.className = "px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow/60 text-cyber-yellow font-bold text-xs rounded-xl hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md";
                 }
                 this.currentPage = 1;
                 this.applyFilters();
@@ -660,7 +753,7 @@
                 
                 this.bookmarksOnly = false;
                 const btn = document.getElementById('btn-bookmarks');
-                btn.className = "px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow text-cyber-yellow font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md";
+                btn.className = "px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow/60 text-cyber-yellow font-bold text-xs rounded-xl hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md";
                 
                 this.currentPage = 1;
                 this.applyFilters();
@@ -730,24 +823,35 @@
                     filterBadge.classList.add('hidden');
                 }
 
-                this.renderGrid();
+                this.renderCurrentView();
                 this.renderPagination();
             }
 
-            renderGrid() {
-                const container = document.getElementById('ps-container');
+            renderCurrentView() {
                 const emptyState = document.getElementById('empty-state');
                 const paginationBar = document.getElementById('pagination-bar');
-                container.innerHTML = '';
 
                 if (this.filteredStatements.length === 0) {
                     emptyState.classList.remove('hidden');
                     paginationBar.classList.add('hidden');
+                    document.getElementById('ps-container-grid').innerHTML = '';
+                    document.getElementById('ps-table-body').innerHTML = '';
                     return;
                 } else {
                     emptyState.classList.add('hidden');
                     paginationBar.classList.remove('hidden');
                 }
+
+                if (this.viewMode === 'grid') {
+                    this.renderGrid();
+                } else {
+                    this.renderTable();
+                }
+            }
+
+            renderGrid() {
+                const container = document.getElementById('ps-container-grid');
+                container.innerHTML = '';
 
                 const pageSize = this.pageSize === 'ALL' ? this.filteredStatements.length : parseInt(this.pageSize);
                 const startIndex = (this.currentPage - 1) * pageSize;
@@ -757,20 +861,18 @@
                     const card = document.createElement('div');
                     const isFrozen = ps.count >= 500;
                     const isWarning = ps.count >= 400 && !isFrozen;
-                    const isOpen = ps.count < 400;
                     const isSelected = this.selectedPS && this.selectedPS.id === ps.id;
                     const isBookmarked = this.bookmarks.includes(ps.id);
+                    const remainingSlots = 500 - ps.count;
 
-                    // High visibility card themes
                     let boxThemeClass = '';
                     let bannerHtml = '';
                     let barColor = '';
-                    const remainingSlots = 500 - ps.count;
 
                     if (isFrozen) {
                         boxThemeClass = 'card-completed';
                         bannerHtml = `
-                            <div class="flex items-center justify-between bg-red-600/30 border border-red-500/70 text-red-200 px-3 py-1.5 rounded-lg mb-3 font-mono font-black text-xs shadow-inner">
+                            <div class="flex items-center justify-between bg-red-600/30 border border-red-500/70 text-red-100 px-3 py-1 rounded-lg mb-3 font-mono font-bold text-xs">
                                 <span class="flex items-center gap-1.5"><i class="fa-solid fa-lock text-red-400"></i> 🔴 COMPLETED (500/500 FULL)</span>
                                 <span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-orbitron font-extrabold uppercase">LOCKED</span>
                             </div>
@@ -779,16 +881,16 @@
                     } else if (isWarning) {
                         boxThemeClass = 'card-warning';
                         bannerHtml = `
-                            <div class="flex items-center justify-between bg-amber-500/30 border-2 border-amber-400 text-amber-100 px-3 py-1.5 rounded-lg mb-3 font-mono font-black text-xs animate-pulse shadow-inner">
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-amber-300"></i> ⚠️ WARNING: FINISHING SOON</span>
-                                <span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded font-orbitron font-black uppercase tracking-wider">${remainingSlots} SLOTS LEFT!</span>
+                            <div class="flex items-center justify-between bg-amber-500/30 border-2 border-amber-400 text-amber-100 px-3 py-1 rounded-lg mb-3 font-mono font-bold text-xs animate-pulse">
+                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-amber-300"></i> ⚠️ WARNING: CLOSING SOON</span>
+                                <span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded font-orbitron font-black uppercase">${remainingSlots} SLOTS LEFT!</span>
                             </div>
                         `;
                         barColor = 'bg-amber-400 shadow-[0_0_12px_#f59e0b]';
                     } else {
                         boxThemeClass = 'card-open';
                         bannerHtml = `
-                            <div class="flex items-center justify-between bg-emerald-500/25 border border-emerald-400/60 text-emerald-100 px-3 py-1.5 rounded-lg mb-3 font-mono font-bold text-xs">
+                            <div class="flex items-center justify-between bg-emerald-500/25 border border-emerald-400/60 text-emerald-100 px-3 py-1 rounded-lg mb-3 font-mono font-bold text-xs">
                                 <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> 🟢 OPEN / ACCEPTING</span>
                                 <span class="bg-emerald-600/80 text-emerald-100 text-[10px] px-2 py-0.5 rounded font-orbitron font-bold">${remainingSlots} SLOTS OPEN</span>
                             </div>
@@ -800,7 +902,7 @@
                         boxThemeClass += ' ring-4 ring-cyber-magenta shadow-2xl shadow-cyber-magenta/40';
                     }
 
-                    card.className = `p-4.5 rounded-xl ${boxThemeClass} transition-all duration-200 cursor-pointer flex flex-col justify-between group`;
+                    card.className = `p-4.5 rounded-2xl ${boxThemeClass} transition-all duration-200 cursor-pointer flex flex-col justify-between group`;
                     card.onclick = (e) => {
                         if (e.target.closest('.star-btn')) return;
                         this.selectPS(ps);
@@ -835,16 +937,15 @@
                             </div>
                             
                             <h4 class="font-orbitron text-sm text-white font-extrabold mb-1.5 line-clamp-2 group-hover:text-cyber-cyan transition leading-snug">${ps.title}</h4>
-                            <div class="text-xs text-slate-300 font-mono mb-3 line-clamp-1 font-semibold"><i class="fa-solid fa-building-columns text-[10px] mr-1 text-slate-400"></i> ${ps.ministry}</div>
+                            <div class="text-xs text-slate-300 mb-3 line-clamp-1 font-semibold"><i class="fa-solid fa-building-columns text-[10px] mr-1 text-slate-400"></i> ${ps.ministry}</div>
                         </div>
 
                         <div>
-                            <!-- Progress Meter -->
                             <div class="flex justify-between text-[11px] font-mono font-bold mb-1">
                                 <span class="text-slate-300">Submissions:</span>
                                 <span class="text-white">${ps.count} / 500 (${pct}%)</span>
                             </div>
-                            <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden mb-2.5 border border-slate-700/80">
+                            <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden mb-2.5 border border-slate-700/80">
                                 <div class="${barColor} h-full transition-all duration-500" style="width: ${pct}%"></div>
                             </div>
                             
@@ -855,6 +956,49 @@
                         </div>
                     `;
                     container.appendChild(card);
+                });
+            }
+
+            renderTable() {
+                const tbody = document.getElementById('ps-table-body');
+                tbody.innerHTML = '';
+
+                const pageSize = this.pageSize === 'ALL' ? this.filteredStatements.length : parseInt(this.pageSize);
+                const startIndex = (this.currentPage - 1) * pageSize;
+                const pageItems = this.filteredStatements.slice(startIndex, startIndex + pageSize);
+
+                pageItems.forEach(ps => {
+                    const tr = document.createElement('tr');
+                    const isFrozen = ps.count >= 500;
+                    const isWarning = ps.count >= 400 && !isFrozen;
+                    const isSelected = this.selectedPS && this.selectedPS.id === ps.id;
+
+                    const rowBg = isSelected ? 'bg-cyber-magenta/20 border-l-4 border-cyber-magenta' :
+                                  isFrozen ? 'bg-red-950/20 hover:bg-red-950/40' :
+                                  isWarning ? 'bg-amber-950/20 hover:bg-amber-950/40' :
+                                  'hover:bg-slate-800/50';
+
+                    tr.className = `${rowBg} transition cursor-pointer`;
+                    tr.onclick = () => this.selectPS(ps);
+
+                    const statusBadge = isFrozen ? '<span class="px-2 py-0.5 rounded bg-red-600/30 text-red-300 border border-red-500 font-mono font-bold text-[10px]">500/500 LOCKED</span>' :
+                                        isWarning ? `<span class="px-2 py-0.5 rounded bg-amber-500/30 text-amber-200 border border-amber-400 font-mono font-bold text-[10px] animate-pulse">${ps.count}/500 (${500-ps.count} LEFT)</span>` :
+                                        `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono font-bold text-[10px]">${ps.count}/500 OPEN</span>`;
+
+                    tr.innerHTML = `
+                        <td class="p-3 font-orbitron font-bold text-cyber-cyan whitespace-nowrap">${ps.id}</td>
+                        <td class="p-3 text-slate-300 font-semibold max-w-[180px] truncate" title="${ps.ministry}">${ps.ministry}</td>
+                        <td class="p-3 text-white font-bold max-w-[280px] truncate" title="${ps.title}">${ps.title}</td>
+                        <td class="p-3 whitespace-nowrap"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${ps.category === 'Software' ? 'bg-blue-500/20 text-blue-300' : 'bg-purple-500/20 text-purple-300'}">${ps.category}</span></td>
+                        <td class="p-3 text-slate-300 font-mono text-[11px] max-w-[150px] truncate">${ps.domain}</td>
+                        <td class="p-3 text-center whitespace-nowrap">${statusBadge}</td>
+                        <td class="p-3 text-center">
+                            <button onclick="app.selectPS(this.dataset.ps)" class="px-2.5 py-1 bg-cyber-cyan/15 hover:bg-cyber-cyan/30 text-cyber-cyan font-bold rounded text-[10px] border border-cyber-cyan/40">
+                                VIEW
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
                 });
             }
 
@@ -877,9 +1021,9 @@
                 if (totalPages <= 6) {
                     for (let i = 1; i <= totalPages; i++) {
                         const pill = document.createElement('button');
-                        pill.className = `w-7 h-7 rounded text-xs font-mono font-bold ${i === this.currentPage ? 'bg-cyber-cyan text-cyber-bg font-extrabold' : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-700'}`;
+                        pill.className = `w-7 h-7 rounded-lg text-xs font-mono font-bold ${i === this.currentPage ? 'bg-cyber-cyan text-slate-950 font-extrabold' : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-700'}`;
                         pill.innerText = i;
-                        pill.onclick = () => { this.currentPage = i; this.renderGrid(); this.renderPagination(); };
+                        pill.onclick = () => { this.currentPage = i; this.renderCurrentView(); this.renderPagination(); };
                         pillsContainer.appendChild(pill);
                     }
                 }
@@ -888,7 +1032,7 @@
             prevPage() {
                 if (this.currentPage > 1) {
                     this.currentPage--;
-                    this.renderGrid();
+                    this.renderCurrentView();
                     this.renderPagination();
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                 }
@@ -899,7 +1043,7 @@
                 const totalPages = Math.ceil(this.filteredStatements.length / pageSize);
                 if (this.currentPage < totalPages) {
                     this.currentPage++;
-                    this.renderGrid();
+                    this.renderCurrentView();
                     this.renderPagination();
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                 }
@@ -908,13 +1052,17 @@
             changePageSize() {
                 this.pageSize = document.getElementById('pagination-size').value;
                 this.currentPage = 1;
-                this.renderGrid();
+                this.renderCurrentView();
                 this.renderPagination();
             }
 
             selectPS(ps) {
+                if (typeof ps === 'string') {
+                    ps = this.statements.find(s => s.id === ps);
+                }
+                if (!ps) return;
                 this.selectedPS = ps;
-                this.renderGrid();
+                this.renderCurrentView();
 
                 document.getElementById('hud-empty').classList.add('hidden');
                 document.getElementById('hud-details').classList.remove('hidden');
@@ -945,7 +1093,7 @@
 
                 if (isFrozen) {
                     progressEl.className = 'bg-red-500 h-full transition-all duration-500 shadow-[0_0_15px_#ef4444]';
-                    statusBanner.className = 'p-3 rounded-lg border-2 border-red-500 bg-red-950/80 text-red-200 text-xs font-mono font-bold flex items-center justify-between';
+                    statusBanner.className = 'p-3 rounded-xl border-2 border-red-500 bg-red-950/80 text-red-100 text-xs font-mono font-bold flex items-center justify-between';
                     bannerText.innerHTML = '<i class="fa-solid fa-lock mr-1.5 text-red-400"></i> CAPACITY LIMIT REACHED (500/500)';
                     bannerBadge.innerText = 'LOCKED';
                     bannerBadge.className = 'px-2 py-0.5 rounded bg-red-600 text-white font-orbitron font-extrabold';
@@ -953,7 +1101,7 @@
                     badgeStatus.className = 'text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/50';
                 } else if (isWarning) {
                     progressEl.className = 'bg-amber-400 h-full transition-all duration-500 shadow-[0_0_15px_#f59e0b]';
-                    statusBanner.className = 'p-3 rounded-lg border-2 border-amber-400 bg-amber-950/80 text-amber-100 text-xs font-mono font-bold flex items-center justify-between animate-pulse';
+                    statusBanner.className = 'p-3 rounded-xl border-2 border-amber-400 bg-amber-950/80 text-amber-100 text-xs font-mono font-bold flex items-center justify-between animate-pulse';
                     bannerText.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1.5 text-amber-300"></i> WARNING: FINISHING VERY SOON';
                     bannerBadge.innerText = `ONLY ${remainingSlots} LEFT!`;
                     bannerBadge.className = 'px-2 py-0.5 rounded bg-amber-500 text-slate-950 font-orbitron font-black';
@@ -961,7 +1109,7 @@
                     badgeStatus.className = 'text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50';
                 } else {
                     progressEl.className = 'bg-emerald-400 h-full transition-all duration-500 shadow-[0_0_15px_#10b981]';
-                    statusBanner.className = 'p-3 rounded-lg border border-emerald-500/60 bg-emerald-950/80 text-emerald-200 text-xs font-mono font-bold flex items-center justify-between';
+                    statusBanner.className = 'p-3 rounded-xl border border-emerald-500/60 bg-emerald-950/80 text-emerald-200 text-xs font-mono font-bold flex items-center justify-between';
                     bannerText.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5 text-emerald-400"></i> OPEN / ACCEPTING SUBMISSIONS';
                     bannerBadge.innerText = `${remainingSlots} SLOTS AVAILABLE`;
                     bannerBadge.className = 'px-2 py-0.5 rounded bg-emerald-600/80 text-emerald-100 font-orbitron font-bold';
@@ -969,14 +1117,14 @@
                     badgeStatus.className = 'text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/50';
                 }
 
-                document.getElementById('hud-ps-desc').innerText = ps.description || `Address national challenges with high-performance technological innovations designed for ${ps.ministry}.`;
+                document.getElementById('hud-ps-desc').innerText = ps.description || `Address national operational bottlenecks by designing enterprise-grade solutions for ${ps.ministry}.`;
 
                 const techContainer = document.getElementById('hud-ps-tech');
                 techContainer.innerHTML = '';
                 if (ps.tech_stack) {
                     ps.tech_stack.forEach(tech => {
                         const pill = document.createElement('span');
-                        pill.className = 'px-2.5 py-1 bg-slate-900 border border-cyber-cyan/50 text-cyber-cyan font-mono text-[11px] font-bold rounded';
+                        pill.className = 'px-2.5 py-1 bg-slate-900 border border-cyber-cyan/50 text-cyber-cyan font-mono text-[11px] font-bold rounded-lg';
                         pill.innerText = tech;
                         techContainer.appendChild(pill);
                     });
@@ -1026,29 +1174,9 @@
 
             copyPSDetails() {
                 if (!this.selectedPS) return;
-                const text = `SIH Statement: ${this.selectedPS.id}\nTitle: ${this.selectedPS.title}\nMinistry: ${this.selectedPS.ministry}\nDomain: ${this.selectedPS.domain}\nCategory: ${this.selectedPS.category}\nSubmissions: ${this.selectedPS.count}/500`;
+                const text = `SIH Statement: ${this.selectedPS.id}\nTitle: ${this.selectedPS.title}\nMinistry: ${this.selectedPS.ministry}\nDomain: ${this.selectedPS.domain}\nCategory: ${this.selectedPS.category}\nSubmissions: ${this.selectedPS.count}/500\nOfficial Portal: https://sih.gov.in/sih2026PS`;
                 navigator.clipboard.writeText(text);
                 this.showToast("Copied PS specifications to clipboard!", "info");
-            }
-
-            exportCSV() {
-                if (!this.filteredStatements.length) return;
-                let csv = "ID,Title,Ministry,Domain,Category,Submissions,MaxCap,Complexity,TechStack\n";
-                this.filteredStatements.forEach(s => {
-                    const tech = s.tech_stack ? s.tech_stack.join('; ') : '';
-                    const line = `"${s.id}","${s.title.replace(/"/g, '""')}","${s.ministry}","${s.domain}","${s.category}",${s.count},500,"${s.complexity}","${tech}"`;
-                    csv += line + "\n";
-                });
-                
-                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement("a");
-                link.setAttribute("href", url);
-                link.setAttribute("download", `sih_problem_statements_${Date.now()}.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                this.showToast(`Exported ${this.filteredStatements.length} problem statements as CSV!`, "success");
             }
 
             initWebSocket() {
@@ -1058,7 +1186,7 @@
                     const ws = new WebSocket(`${wsProtocol}//${wsHost}/ws/sih-updates`);
 
                     ws.onopen = () => {
-                        document.getElementById('backend-status').innerText = '0.5s WEBSOCKET ACTIVE';
+                        document.getElementById('backend-status').innerText = 'REAL-TIME TELEMETRY ACTIVE';
                     };
 
                     ws.onmessage = (event) => {
@@ -1101,31 +1229,6 @@
                     const clockEl = document.getElementById('header-clock');
                     if (clockEl) clockEl.innerText = new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
                 }, 500);
-            }
-
-            async initApp() {
-                this.updateBookmarkBadge();
-                await this.loadStatements();
-                this.populateFilterDropdowns();
-                this.applyFilters();
-                this.initWebSocket();
-                this.handleUrlHash();
-                window.addEventListener('hashchange', () => this.handleUrlHash());
-            }
-
-            handleUrlHash() {
-                const hash = window.location.hash.toLowerCase();
-                const params = new URLSearchParams(window.location.search);
-                if (hash === '#shortlist' || params.get('view') === 'shortlist') {
-                    this.bookmarksOnly = true;
-                    const btn = document.getElementById('btn-bookmarks');
-                    if (btn) btn.className = "px-3.5 py-2 bg-cyber-yellow text-cyber-bg font-extrabold font-orbitron text-xs rounded-lg transition flex items-center gap-1.5 shadow-lg shadow-cyber-yellow/30";
-                    this.applyFilters();
-                } else if (hash === '#login' || params.get('modal') === 'otp') {
-                    this.openAuthModal();
-                } else if (hash === '#export' || params.get('export') === 'csv') {
-                    window.location.href = '/api/export-csv';
-                }
             }
 
             openAuthModal() {
@@ -1171,7 +1274,6 @@
                         document.getElementById('auth-step-1').classList.add('hidden');
                         document.getElementById('auth-step-2').classList.remove('hidden');
                         
-                        // Auto-fill or show demo OTP
                         if (data.demo_otp) {
                             document.getElementById('auth-otp-code').value = data.demo_otp;
                             this.showToast(`🔑 Demo OTP Code: ${data.demo_otp}`, "success");
@@ -1214,7 +1316,7 @@
                         document.getElementById('auth-step-2').classList.add('hidden');
                         document.getElementById('auth-step-3').classList.remove('hidden');
                         document.getElementById('btn-otp-login').innerHTML = '<i class="fa-solid fa-user-check text-xs text-cyber-green"></i> AUTHENTICATED';
-                        document.getElementById('btn-otp-login').className = "px-3.5 py-2 bg-cyber-green/20 border border-cyber-green text-cyber-green font-orbitron text-xs font-bold rounded-lg transition flex items-center gap-1.5 shadow-md";
+                        document.getElementById('btn-otp-login').className = "px-3.5 py-2 bg-cyber-green/20 border border-cyber-green text-cyber-green font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-md";
                         this.showToast("🔓 Holographic authentication successful!", "success");
                     } else {
                         this.showToast(data.message || "Invalid OTP code", "error");
@@ -1231,11 +1333,11 @@
                 const toast = document.getElementById('toast');
                 toast.innerText = message;
                 if (type === 'success') {
-                    toast.className = 'fixed bottom-6 right-6 z-50 transform opacity-100 transition-all duration-300 font-mono text-xs font-bold px-4 py-3 rounded-lg border bg-slate-900 border-cyber-green text-cyber-green shadow-xl shadow-cyber-green/20 flex items-center gap-2';
+                    toast.className = 'fixed bottom-6 right-6 z-50 transform opacity-100 transition-all duration-300 font-mono text-xs font-bold px-4 py-3 rounded-xl border bg-slate-900 border-cyber-green text-cyber-green shadow-xl shadow-cyber-green/20 flex items-center gap-2';
                 } else if (type === 'error') {
-                    toast.className = 'fixed bottom-6 right-6 z-50 transform opacity-100 transition-all duration-300 font-mono text-xs font-bold px-4 py-3 rounded-lg border bg-slate-900 border-red-500 text-red-400 shadow-xl shadow-red-500/20 flex items-center gap-2';
+                    toast.className = 'fixed bottom-6 right-6 z-50 transform opacity-100 transition-all duration-300 font-mono text-xs font-bold px-4 py-3 rounded-xl border bg-slate-900 border-red-500 text-red-400 shadow-xl shadow-red-500/20 flex items-center gap-2';
                 } else {
-                    toast.className = 'fixed bottom-6 right-6 z-50 transform opacity-100 transition-all duration-300 font-mono text-xs font-bold px-4 py-3 rounded-lg border bg-slate-900 border-cyber-cyan text-cyber-cyan shadow-xl shadow-cyber-cyan/20 flex items-center gap-2';
+                    toast.className = 'fixed bottom-6 right-6 z-50 transform opacity-100 transition-all duration-300 font-mono text-xs font-bold px-4 py-3 rounded-xl border bg-slate-900 border-cyber-cyan text-cyber-cyan shadow-xl shadow-cyber-cyan/20 flex items-center gap-2';
                 }
 
                 setTimeout(() => {
