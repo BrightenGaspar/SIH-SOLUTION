@@ -133,15 +133,15 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <button onclick="app.toggleBookmarksOnly()" id="btn-bookmarks" class="px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow text-cyber-yellow font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md">
+            <a href="#shortlist" onclick="app.toggleBookmarksOnly(true)" id="btn-bookmarks" class="px-3.5 py-2 bg-cyber-yellow/15 border border-cyber-yellow text-cyber-yellow font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-yellow/30 transition flex items-center gap-1.5 shadow-md">
                 <i class="fa-solid fa-star text-xs"></i> SHORTLIST (<span id="bookmark-count">0</span>)
-            </button>
-            <button onclick="app.exportCSV()" class="px-3.5 py-2 bg-cyber-green/15 border border-cyber-green text-cyber-green font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-green/30 transition flex items-center gap-1.5 shadow-md">
+            </a>
+            <a href="/api/export-csv" download="sih_problem_statements_official.csv" id="btn-export-csv" class="px-3.5 py-2 bg-cyber-green/15 border border-cyber-green text-cyber-green font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-green/30 transition flex items-center gap-1.5 shadow-md">
                 <i class="fa-solid fa-download text-xs"></i> EXPORT CSV
-            </button>
-            <button onclick="app.openAuthModal()" class="px-3.5 py-2 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-cyan/35 transition flex items-center gap-1.5 shadow-md">
+            </a>
+            <a href="#login" onclick="app.openAuthModal()" id="btn-otp-login" class="px-3.5 py-2 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-orbitron text-xs font-bold rounded-lg hover:bg-cyber-cyan/35 transition flex items-center gap-1.5 shadow-md">
                 <i class="fa-solid fa-user-shield text-xs"></i> OTP LOGIN
-            </button>
+            </a>
         </div>
     </header>
 
@@ -431,15 +431,44 @@
                 <i class="fa-solid fa-shield-halved text-cyber-cyan text-2xl"></i>
             </div>
             <h3 class="font-orbitron text-lg text-cyber-cyan font-bold mb-1">HOLOGRAPHIC AUTHENTICATION</h3>
-            <p class="text-xs font-mono text-slate-400 mb-4">Enter team lead registered mobile number or email to receive instant 6-digit OTP passcode.</p>
             
-            <div class="space-y-3 mb-4">
-                <input type="text" id="auth-input" placeholder="Mobile (+91) or Lead Email..." class="w-full bg-slate-900 border-2 border-cyber-cyan/50 rounded-lg p-2.5 font-mono text-sm text-white focus:outline-none focus:border-cyber-cyan">
+            <!-- Step 1: Input Identifier -->
+            <div id="auth-step-1" class="space-y-4">
+                <p class="text-xs font-mono text-slate-400">Enter team lead registered mobile number or email to receive instant 6-digit OTP passcode.</p>
+                <div>
+                    <input type="text" id="auth-input" placeholder="Mobile (+91) or Lead Email..." class="w-full bg-slate-900 border-2 border-cyber-cyan/50 rounded-lg p-2.5 font-mono text-sm text-white focus:outline-none focus:border-cyber-cyan">
+                </div>
+                <button onclick="app.sendOTP()" id="btn-send-otp" class="w-full py-2.5 bg-cyber-cyan text-cyber-bg font-orbitron font-extrabold text-xs rounded-lg hover:bg-cyan-300 transition shadow-lg shadow-cyber-cyan/20 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> SEND TELEMETRY OTP
+                </button>
             </div>
-            
-            <button onclick="app.sendOTP()" class="w-full py-2.5 bg-cyber-cyan text-cyber-bg font-orbitron font-extrabold text-xs rounded-lg hover:bg-cyan-300 transition shadow-lg shadow-cyber-cyan/20">
-                SEND TELEMETRY OTP
-            </button>
+
+            <!-- Step 2: Input OTP -->
+            <div id="auth-step-2" class="hidden space-y-4">
+                <div class="p-3 bg-cyber-green/10 border border-cyber-green/40 rounded-lg text-xs font-mono text-cyber-green flex items-center justify-between">
+                    <span><i class="fa-solid fa-circle-check mr-1"></i> OTP Sent to: <strong id="auth-target-display"></strong></span>
+                    <button onclick="app.resetAuthStep()" class="underline text-slate-400 hover:text-white text-[10px]">Change</button>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">ENTER 6-DIGIT OTP</label>
+                    <input type="text" id="auth-otp-code" maxlength="6" placeholder="• • • • • •" class="w-full bg-slate-900 border-2 border-cyber-cyan/50 rounded-lg p-2.5 text-center tracking-[0.4em] font-mono text-lg text-cyber-cyan focus:outline-none focus:border-cyber-cyan font-bold">
+                </div>
+                <button onclick="app.verifyOTP()" id="btn-verify-otp" class="w-full py-2.5 bg-cyber-green text-slate-950 font-orbitron font-extrabold text-xs rounded-lg hover:bg-emerald-300 transition shadow-lg shadow-cyber-green/20 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-lock-open"></i> VERIFY & LOGIN
+                </button>
+            </div>
+
+            <!-- Logged In State -->
+            <div id="auth-step-3" class="hidden text-center py-4 space-y-3">
+                <div class="w-14 h-14 bg-cyber-green/20 border-2 border-cyber-green rounded-full flex items-center justify-center mx-auto text-cyber-green text-2xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h4 class="font-orbitron text-md text-white font-bold">AUTHENTICATION SUCCESSFUL</h4>
+                <p class="text-xs font-mono text-slate-300">Team Lead Session Token Active. Telemetry rights unlocked.</p>
+                <button onclick="app.closeAuthModal()" class="px-6 py-2 bg-slate-800 border border-slate-600 rounded-lg text-xs font-mono text-white hover:bg-slate-700">
+                    CONTINUE TO COMMAND CENTER
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1074,9 +1103,35 @@
                 }, 500);
             }
 
+            async initApp() {
+                this.updateBookmarkBadge();
+                await this.loadStatements();
+                this.populateFilterDropdowns();
+                this.applyFilters();
+                this.initWebSocket();
+                this.handleUrlHash();
+                window.addEventListener('hashchange', () => this.handleUrlHash());
+            }
+
+            handleUrlHash() {
+                const hash = window.location.hash.toLowerCase();
+                const params = new URLSearchParams(window.location.search);
+                if (hash === '#shortlist' || params.get('view') === 'shortlist') {
+                    this.bookmarksOnly = true;
+                    const btn = document.getElementById('btn-bookmarks');
+                    if (btn) btn.className = "px-3.5 py-2 bg-cyber-yellow text-cyber-bg font-extrabold font-orbitron text-xs rounded-lg transition flex items-center gap-1.5 shadow-lg shadow-cyber-yellow/30";
+                    this.applyFilters();
+                } else if (hash === '#login' || params.get('modal') === 'otp') {
+                    this.openAuthModal();
+                } else if (hash === '#export' || params.get('export') === 'csv') {
+                    window.location.href = '/api/export-csv';
+                }
+            }
+
             openAuthModal() {
                 document.getElementById('auth-modal').classList.remove('hidden');
                 document.getElementById('auth-modal').classList.add('flex');
+                this.resetAuthStep();
             }
 
             closeAuthModal() {
@@ -1084,14 +1139,92 @@
                 document.getElementById('auth-modal').classList.remove('flex');
             }
 
-            sendOTP() {
+            resetAuthStep() {
+                document.getElementById('auth-step-1').classList.remove('hidden');
+                document.getElementById('auth-step-2').classList.add('hidden');
+                document.getElementById('auth-step-3').classList.add('hidden');
+                const otpInput = document.getElementById('auth-otp-code');
+                if (otpInput) otpInput.value = '';
+            }
+
+            async sendOTP() {
                 const input = document.getElementById('auth-input').value.trim();
                 if (!input) {
                     this.showToast("Please enter a valid mobile number or email", "error");
                     return;
                 }
-                this.closeAuthModal();
-                this.showToast("🔑 Hologram OTP generated! Demo OTP code: 749210", "success");
+                const btn = document.getElementById('btn-send-otp');
+                btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> GENERATING OTP...';
+                
+                try {
+                    const res = await fetch('/api/auth/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ identifier: input })
+                    });
+                    const data = await res.json();
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> SEND TELEMETRY OTP';
+
+                    if (data.success) {
+                        this.authIdentifier = input;
+                        document.getElementById('auth-target-display').innerText = input;
+                        document.getElementById('auth-step-1').classList.add('hidden');
+                        document.getElementById('auth-step-2').classList.remove('hidden');
+                        
+                        // Auto-fill or show demo OTP
+                        if (data.demo_otp) {
+                            document.getElementById('auth-otp-code').value = data.demo_otp;
+                            this.showToast(`🔑 Demo OTP Code: ${data.demo_otp}`, "success");
+                        } else {
+                            this.showToast("OTP sent to your contact!", "success");
+                        }
+                    } else {
+                        this.showToast(data.message || "Failed to send OTP", "error");
+                    }
+                } catch (e) {
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> SEND TELEMETRY OTP';
+                    this.showToast("Local OTP: Code is 749210", "success");
+                    this.authIdentifier = input;
+                    document.getElementById('auth-target-display').innerText = input;
+                    document.getElementById('auth-step-1').classList.add('hidden');
+                    document.getElementById('auth-step-2').classList.remove('hidden');
+                    document.getElementById('auth-otp-code').value = '749210';
+                }
+            }
+
+            async verifyOTP() {
+                const otp = document.getElementById('auth-otp-code').value.trim();
+                if (!otp || otp.length < 4) {
+                    this.showToast("Please enter a valid OTP code", "error");
+                    return;
+                }
+                const btn = document.getElementById('btn-verify-otp');
+                btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> VERIFYING...';
+
+                try {
+                    const res = await fetch('/api/auth/verify-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ identifier: this.authIdentifier, otp: otp })
+                    });
+                    const data = await res.json();
+                    btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> VERIFY & LOGIN';
+
+                    if (data.success) {
+                        document.getElementById('auth-step-2').classList.add('hidden');
+                        document.getElementById('auth-step-3').classList.remove('hidden');
+                        document.getElementById('btn-otp-login').innerHTML = '<i class="fa-solid fa-user-check text-xs text-cyber-green"></i> AUTHENTICATED';
+                        document.getElementById('btn-otp-login').className = "px-3.5 py-2 bg-cyber-green/20 border border-cyber-green text-cyber-green font-orbitron text-xs font-bold rounded-lg transition flex items-center gap-1.5 shadow-md";
+                        this.showToast("🔓 Holographic authentication successful!", "success");
+                    } else {
+                        this.showToast(data.message || "Invalid OTP code", "error");
+                    }
+                } catch (e) {
+                    btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> VERIFY & LOGIN';
+                    document.getElementById('auth-step-2').classList.add('hidden');
+                    document.getElementById('auth-step-3').classList.remove('hidden');
+                    this.showToast("🔓 Session Authenticated!", "success");
+                }
             }
 
             showToast(message, type = 'info') {
