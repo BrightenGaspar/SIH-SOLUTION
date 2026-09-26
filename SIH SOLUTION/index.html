@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIH Hologram Command Center v2.1</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#02050e',
+                            panel: '#050c1e',
+                            card: '#08142c',
+                            cyan: '#00f0ff',
+                            magenta: '#ff007f',
+                            yellow: '#ffe600',
+                            green: '#00ff66'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #02050e;
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 60%),
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+        }
+        .holo-border {
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+        }
+        .holo-border-magenta {
+            border: 1px solid rgba(255, 0, 127, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0, 240, 255, 0.1) 50%, rgba(0, 240, 255, 0.1));
+            background-size: 100% 4px;
+        }
+    </style>
+</head>
+<body class="font-rajdhani min-h-screen p-4 scanline">
+
+    <!-- TOP HEADER NAV -->
+    <header class="holo-border bg-cyber-panel/80 backdrop-blur-md rounded-lg p-4 mb-6 flex flex-wrap justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <i class="fa-solid fa-cube text-cyber-cyan text-2xl animate-pulse"></i>
+            <h1 class="font-orbitron font-extrabold text-xl text-cyber-cyan tracking-wider">SIH MONITOR HUB <span class="text-xs text-cyber-magenta font-mono">v2.1</span></h1>
+        </div>
+        
+        <div class="flex items-center gap-6 font-mono text-sm">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyber-green animate-ping"></span>
+                <span class="text-cyber-green font-bold">LIVE SCRAPER ONLINE</span>
+            </div>
+            <div id="header-clock" class="text-slate-400">2026-09-26 08:06:51 UTC</div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button onclick="app.simulateNewPS()" class="px-3 py-1.5 bg-cyber-magenta/20 border border-cyber-magenta text-cyber-magenta font-orbitron text-xs rounded hover:bg-cyber-magenta/40 transition">
+                <i class="fa-solid fa-bolt mr-1"></i> SIMULATE +1 PS
+            </button>
+            <button onclick="app.openAuthModal()" class="px-4 py-1.5 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-orbitron text-xs rounded hover:bg-cyber-cyan/40 transition">
+                <i class="fa-solid fa-user-shield mr-1"></i> OTP LOGIN
+            </button>
+        </div>
+    </header>
+
+    <!-- SEARCH & FILTER BAR -->
+    <section class="holo-border bg-cyber-panel/60 rounded-lg p-4 mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="relative flex-1 min-w-[280px]">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-cyber-cyan"></i>
+            <input type="text" id="search-input" onkeyup="app.filterStatements()" placeholder="SEARCH PS ID, MINISTRY, OR KEYWORD..." class="w-full bg-cyber-bg border border-cyber-cyan/40 rounded pl-10 pr-4 py-2 text-sm font-mono text-cyber-cyan placeholder-slate-500 focus:outline-none focus:border-cyber-cyan">
+        </div>
+        <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
+            <button onclick="app.setCapacityFilter('ALL')" class="px-3 py-1.5 rounded bg-cyber-cyan/20 text-cyber-cyan border border-cyber-cyan/50">ALL</button>
+            <button onclick="app.setCapacityFilter('FROZEN')" class="px-3 py-1.5 rounded bg-red-950/40 text-red-400 border border-red-500/50">FROZEN (500/500)</button>
+            <button onclick="app.setCapacityFilter('CRITICAL')" class="px-3 py-1.5 rounded bg-amber-950/40 text-amber-400 border border-amber-500/50">CRITICAL (400+)</button>
+            <button onclick="app.setCapacityFilter('MODERATE')" class="px-3 py-1.5 rounded bg-cyber-panel text-slate-300 border border-slate-600">MODERATE</button>
+        </div>
+    </section>
+
+    <!-- TOP INDICATOR CUBES (01 TO 04) -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="holo-border bg-cyber-panel/60 p-4 rounded-lg">
+            <div class="text-xs font-mono text-cyber-cyan mb-1">01 STATUS_MONITOR</div>
+            <div class="text-2xl font-orbitron font-bold text-white mb-2">PING: 24ms</div>
+            <div class="text-xs text-slate-400 font-mono">Requests Processed: <span id="stat-requests" class="text-cyber-green">14,290</span></div>
+        </div>
+        <div class="holo-border bg-cyber-panel/60 p-4 rounded-lg">
+            <div class="text-xs font-mono text-cyber-cyan mb-1">02 LIVE_SCRAPER</div>
+            <div class="text-sm font-mono text-cyber-green bg-cyber-bg p-2 rounded border border-cyber-cyan/20 h-12 overflow-hidden">
+                [200 OK] sih.gov.in/api/ps-feed <br>
+                > Sync complete (0.5s cycle)
+            </div>
+        </div>
+        <div class="holo-border bg-cyber-panel/60 p-4 rounded-lg">
+            <div class="text-xs font-mono text-cyber-magenta mb-1">03 THREAT_DETECTION</div>
+            <div class="text-xl font-orbitron text-cyber-magenta">RADAR ACTIVE</div>
+            <div class="text-xs text-slate-400 font-mono">Scanning 500-cap caps & surge limits</div>
+        </div>
+        <div class="holo-border bg-cyber-panel/60 p-4 rounded-lg">
+            <div class="text-xs font-mono text-cyber-cyan mb-1">04 DATABASE_SYNC</div>
+            <div class="text-2xl font-orbitron text-cyber-yellow">REDIS CACHE</div>
+            <div class="w-full bg-slate-800 h-2 rounded mt-2 overflow-hidden">
+                <div class="bg-cyber-cyan h-full w-[88%]"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN FEEDS & HUD PANEL -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <!-- Live Problem Feed -->
+        <div class="lg:col-span-2 holo-border bg-cyber-panel/60 p-5 rounded-lg">
+            <h2 class="font-orbitron text-lg text-cyber-cyan mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-list-check"></i> PROBLEM STATEMENTS FEED
+            </h2>
+            <div id="ps-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-2">
+                <!-- PS Cards Render Dynamically -->
+            </div>
+        </div>
+
+        <!-- Selected HUD Panel -->
+        <div class="holo-border-magenta bg-cyber-panel/80 p-5 rounded-lg flex flex-col justify-between">
+            <div>
+                <div class="text-xs font-mono text-cyber-magenta mb-2">06 PS_ANALYSIS_HUD</div>
+                <h3 id="hud-title" class="font-orbitron text-xl text-white mb-3">Select a Problem Statement</h3>
+                <div id="hud-content" class="text-sm text-slate-300 space-y-3 font-mono">
+                    <p class="text-slate-500">Click on any problem statement card to inspect telemetry, tech stacks, and tracking status.</p>
+                </div>
+            </div>
+            <button id="hud-track-btn" class="w-full py-2 mt-6 bg-cyber-magenta/20 border border-cyber-magenta text-cyber-magenta font-orbitron text-sm rounded opacity-50 cursor-not-allowed">
+                TRACK STATEMENT
+            </button>
+        </div>
+    </section>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="holo-border bg-cyber-panel max-w-md w-full p-6 rounded-lg relative">
+            <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-orbitron text-lg text-cyber-cyan mb-4">HOLOGRAPHIC AUTHENTICATION</h3>
+            <p class="text-xs font-mono text-slate-400 mb-4">Enter mobile number or email to receive a 6-digit OTP passcode.</p>
+            <input type="text" placeholder="Mobile (+91) or Email" class="w-full bg-cyber-bg border border-cyber-cyan/40 rounded p-2 mb-4 font-mono text-sm text-cyber-cyan focus:outline-none">
+            <button onclick="alert('OTP Sent! Demo OTP is 123456')" class="w-full py-2 bg-cyber-cyan text-cyber-bg font-orbitron font-bold text-sm rounded hover:bg-cyan-300 transition">
+                SEND OTP
+            </button>
+        </div>
+    </div>
+
+    <!-- APP ENGINE JS -->
+    <script>
+        class SIHApp {
+            constructor() {
+                this.reqCounter = 14290;
+                this.statements = [
+                    { id: 'PS1701', title: 'AI-Based Smart Traffic Management', ministry: 'Ministry of Road Transport', count: 482, tag: 'Software', domain: 'AI/ML' },
+                    { id: 'PS1702', title: 'IoT Drone Detection Network', ministry: 'Ministry of Defence', count: 500, tag: 'Hardware', domain: 'IoT' },
+                    { id: 'PS1703', title: 'Blockchain Land Registry Portal', ministry: 'Ministry of Housing', count: 310, tag: 'Software', domain: 'Blockchain' },
+                    { id: 'PS1704', title: 'Automated Water Quality Sensor HUD', ministry: 'Jal Shakti', count: 180, tag: 'Hardware', domain: 'Sensors' }
+                ];
+                this.activeFilter = 'ALL';
+                this.initEngine();
+            }
+
+            initEngine() {
+                this.renderStatements();
+                
+                // 0.5s Realtime Hybrid Sync Loop
+                setInterval(() => {
+                    this.reqCounter += Math.floor(Math.random() * 2) + 1;
+                    document.getElementById('stat-requests').innerText = this.reqCounter.toLocaleString();
+                    document.getElementById('header-clock').innerText = new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+                }, 500);
+            }
+
+            renderStatements() {
+                const container = document.getElementById('ps-container');
+                container.innerHTML = '';
+
+                this.statements.forEach(ps => {
+                    if (this.activeFilter === 'FROZEN' && ps.count < 500) return;
+                    if (this.activeFilter === 'CRITICAL' && (ps.count < 400 || ps.count >= 500)) return;
+                    if (this.activeFilter === 'MODERATE' && ps.count >= 400) return;
+
+                    const card = document.createElement('div');
+                    const isFrozen = ps.count >= 500;
+                    const isCritical = ps.count >= 400 && !isFrozen;
+
+                    card.className = `p-4 rounded border ${isFrozen ? 'border-red-500/60 bg-red-950/20' : isCritical ? 'border-amber-500/60 bg-amber-950/20' : 'border-cyber-cyan/30 bg-cyber-card'} hover:border-cyber-cyan transition cursor-pointer`;
+                    card.onclick = () => this.selectPS(ps);
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="font-mono text-xs text-cyber-cyan font-bold">${ps.id}</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded ${isFrozen ? 'bg-red-500/20 text-red-400' : isCritical ? 'bg-amber-500/20 text-amber-400' : 'bg-cyber-cyan/20 text-cyber-cyan'}">
+                                ${ps.count}/500 Submissions
+                            </span>
+                        </div>
+                        <h4 class="font-orbitron text-sm text-white font-semibold mb-1">${ps.title}</h4>
+                        <div class="text-xs text-slate-400 font-mono">${ps.ministry}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            selectPS(ps) {
+                document.getElementById('hud-title').innerText = `${ps.id}: ${ps.title}`;
+                document.getElementById('hud-content').innerHTML = `
+                    <div><strong>Ministry:</strong> ${ps.ministry}</div>
+                    <div><strong>Domain:</strong> ${ps.domain}</div>
+                    <div><strong>Capacity:</strong> ${ps.count} / 500 Registered</div>
+                    <div><strong>Status:</strong> ${ps.count >= 500 ? '<span class="text-red-400">FROZEN</span>' : 'ACCEPTING'}</div>
+                `;
+                const btn = document.getElementById('hud-track-btn');
+                btn.className = "w-full py-2 mt-6 bg-cyber-magenta text-white font-orbitron text-sm rounded hover:bg-magenta-600 transition cursor-pointer";
+                btn.onclick = () => alert(`Tracking alert enabled for ${ps.id}`);
+            }
+
+            setCapacityFilter(type) {
+                this.activeFilter = type;
+                this.renderStatements();
+            }
+
+            simulateNewPS() {
+                const newId = `PS${1705 + this.statements.length}`;
+                this.statements.unshift({
+                    id: newId,
+                    title: 'Real-Time Cyber Threat Scraper',
+                    ministry: 'MeitY',
+                    count: 412,
+                    tag: 'Software',
+                    domain: 'Cybersecurity'
+                });
+                this.renderStatements();
+            }
+
+            openAuthModal() { document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-modal').classList.add('flex'); }
+            closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); document.getElementById('auth-modal').classList.remove('flex'); }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { window.app = new SIHApp(); });
+    </script>
+</body>
+</html>
