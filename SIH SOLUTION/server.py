@@ -151,6 +151,6 @@ if __name__ == "__main__":
         target_port += 1
 
     print(f"\n=======================================================")
-    print(f"🚀 SIH COMMAND CENTER RUNNING AT: http://127.0.0.1:{target_port}")
+    print(f"[+] SIH COMMAND CENTER RUNNING AT: http://127.0.0.1:{target_port}")
     print(f"=======================================================\n")
     uvicorn.run(app, host="127.0.0.1", port=target_port)
